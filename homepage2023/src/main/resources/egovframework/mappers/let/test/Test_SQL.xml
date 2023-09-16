@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.let.test.service.impl.TestMapper">   
+
+	<resultMap id="test" type="egovframework.let.test.service.TestVO">
+		<result property="testId" column="TEST_ID"/>
+		<result property="sj" column="SJ"/>
+		<result property="cn" column="CN"/>
+		<result property="userNm" column="USER_NM"/>
+		<result property="frstRegistPnttm" column="FRST_REGIST_PNTTM"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID"/>
+	</resultMap>
+	
+
+	<select id="selectTestList" resultType="egovMap">
+		SELECT 
+    		TEST_ID
+			, SJ
+			, CN
+			, USER_NM
+			, FRST_REGIST_PNTTM
+			, FRST_REGISTER_ID
+			, LAST_UPDT_PNTTM
+			, LAST_UPDUSR_ID
+		FROM LETCRUDTEST
+		ORDER BY TEST_ID DESC
+		
+	</select>
+	
+ 	<select id="selectTestListCnt" resultType="java.lang.Integer">
+		SELECT
+			COUNT(*) CNT
+		FROM BOARD A
+
+	</select>
+
+<insert id="insertTest" parameterType="egovframework.let.test.service.TestVO">
+	INSERT INTO LETCRUDTEST (
+		TEST_ID             
+		, SJ           
+		, CN
+		, USER_NM
+		, FRST_REGIST_PNTTM  
+		, FRST_REGISTER_ID     
+		, LAST_UPDT_PNTTM      
+		, LAST_UPDUSR_ID
+	) VALUES (
+		#{testId}
+		, #{sj}
+		, #{cn}
+		, #{userNm}
+		, NOW()
+		, #{userNm}
+		, NOW()
+		, #{userNm}
+	)      
+	</insert>
+	
+	<select id="selectTest" resultMap="test">
+		SELECT
+			 TEST_ID
+			, SJ
+			, CN
+			, USER_NM
+			, FRST_REGIST_PNTTM
+			, FRST_REGISTER_ID
+		FROM LETCRUDTEST
+		WHERE TEST_ID = #{testId}
+	</select>
+	
+		<update id="updateTest" parameterType="egovframework.let.test.service.TestVO">
+	UPDATE LETCRUDTEST SET
+		SJ = #{sj}
+		, CN = #{cn}
+		, LAST_UPDT_PNTTM = NOW()
+		, LAST_UPDUSR_ID = #{testId}
+	WHERE TEST_ID = #{testId}
+	</update>
+	
+	<delete id="deleteTest" parameterType="egovframework.let.test.service.TestVO">
+		DELETE FROM LETCRUDTEST
+		WHERE TEST_ID = #{testId}
+	</delete>
+			
+	
+			
+</mapper> 
+
+
+
+
+
+
+
+
+
+
+
+
